@@ -12,7 +12,9 @@
 
 
 let getData = async () => {
-    let response = await axios.get('https://pokeapi.co/api/v2/pokemon/');
+    let apokemon = document.getElementById('myPokemon').value
+    console.log(apokemon)
+    let response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${apokemon}`);
     if (response.status == 200){
         console.log('Async / await / Axios', response.data)
         return response.data
@@ -24,9 +26,11 @@ getData()
 let loadData = async () => {
     let data = await getData();
     console.log(data)
-    let new_row = `<tr><td scope='row'>${data.results.name}</td></tr>`;
-    
+    let image = document.createElement("img")
+    image.src= data.sprites.front_default
+    let new_row = `<tr><td scope='row'> <div id="myImage"></div>${data.name}</td></tr>`;
     document.getElementById("pokemonBody").insertAdjacentHTML('afterbegin', new_row);
+    document.getElementById("myImage").appendChild(image)
 }
 
 let clearData = () => {
